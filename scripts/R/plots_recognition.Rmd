@@ -23,13 +23,17 @@ library(psycho)
 library(sjPlot)
 library(PupillometryR)
 library(MetBrewer)
+library(here)
 ```
 
 # Open data seperately
 ```{r}
-dfM <- read.csv("L:/2_Research/2_Analysis_Folder/MemVio//part3_RTout.csv")
+here_path <- here()
+data_path <- file.path(here_path, "data", "raw_data")
 
-dfW <- read.csv("L:/2_Research/2_Analysis_Folder/Wubbles//part3_RTout.csv")
+df_m <- read.csv(file = file.path(data_path, "m_part3_rt_out.csv"))
+
+df_w <- read.csv(file = file.path(data_path, "w_part3_rt_out.csv"))
 ```
 
 Preparations for dfM
