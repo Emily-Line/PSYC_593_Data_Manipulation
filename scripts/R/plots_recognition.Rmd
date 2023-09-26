@@ -170,31 +170,23 @@ ggplot(df_corr_ans_part, aes(x = 1, y = corrAns, fill = pe)) +
 
 # Third plot - violin
 ```{r}
+
+# Plot of hit rate as a function of pe level, per each experiment
+# Significance shown for low vs. high pe level
 ggplot(df_corr_ans_part, aes(x = pe, y = corrAns, fill = pe)) +
   geom_violin(color = "white", trim = TRUE) +
-
-  # subject lines
   geom_jitter(aes(x = pe, y = corrAns, group = participant, alpha = 0.5), color = "gray50", size = 0.5, position = position_dodge(0)) +
   geom_line(aes(x = pe, y = corrAns, group = participant, alpha = 0.5), color = "gray50", position = position_dodge(0)) +
-
-  # group mean
   geom_point(data = df_corr_ans, size = 1) +
-  # error bar
   geom_errorbar(data = df_corr_ans, aes(ymin = corrAns - se, ymax = corrAns + se, width = 0.1)) +
   geom_line(data = df_corr_ans, aes(x = pe, y = corrAns), size = 0.9, group = 1) +
-
-  # visual things
   scale_x_discrete(name = "PE Level", labels = c("lowPE" = "Low", "medPE" = "Medium", "highPE" = "High")) +
   scale_fill_manual(values = met.brewer("Derain", 5, type = "continuous")) +
   theme_classic() +
   theme(text = element_text(family = "TT Times New Roman", size = 15), legend.title = element_text(size = 1), legend.text = element_text(size = 12), legend.position = "None", legend.direction = "vertical") +
   ylab("Hit Responses") +
   # ylim(0, 1) +
-
-  # significance
   geom_signif(comparisons = list(c("highPE", "lowPE")), map_signif_level = FALSE) +
-
-  # studies
   facet_wrap(. ~ study)
 ```
 
