@@ -28,47 +28,55 @@ library(here)
 
 # Open data seperately
 ```{r}
+# setting relative path
 here_path <- here()
+
+# relative data path
 data_path <- file.path(here_path, "data", "raw_data")
 
+# reading the data in
 df_m <- read.csv(file = file.path(data_path, "m_part3_rt_out.csv"))
-
 df_w <- read.csv(file = file.path(data_path, "w_part3_rt_out.csv"))
 ```
 
-Preparations for dfM
+Preparations for df_m
 ```{r}
-dfM$pe <- factor(dfM$pe, levels = c("lowPE", "medPE", "highPE")) # pe
+df_m$pe <- factor(df_m$pe, levels = c("lowPE", "medPE", "highPE")) # pe
 
-dfM$participant <- as.factor(dfM$participant) # participants
+df_m$participant <- as.factor(df_m$participant) # participants
 
-dfM$conf <- factor(dfM$conf, levels = c("1", "2", "3", "4")) # confidence
+df_m$conf <- factor(df_m$conf, levels = c("1", "2", "3", "4")) # confidence
 
-dfM <- na.omit(dfM)
+df_m <- na.omit(df_m)
 
-dfM$study <- c("Experiment 1")
+df_m$study <- c("Experiment 1")
 ```
 
-# preparations for dfW
+# preparations for df_w
 ```{r}
 # change the naming for PE levels to be consistend
-dfW <- dfW %>%
-  mutate(PE_level = recode(PE_level, low = "lowPE", medium = "medPE", high = "highPE"))
+df_w <- df_w %>%
+  mutate(pe = recode(PE_level, low = "lowPE", medium = "medPE", high = "highPE"))
 
-dfW$pe <- factor(dfW$PE_level, levels = c("lowPE", "medPE", "highPE")) # pe
+# converting pe to a factor variable
+df_w$pe <- factor(df_w$pe, levels = c("lowPE", "medPE", "highPE")) # pe
 
-dfW$participant <- as.factor(dfW$participant) # participants
+# setting participant to a factor variable
+df_w$participant <- as.factor(df_w$participant) # participants
 
-dfW$conf <- factor(dfW$conf, levels = c("1", "2", "3", "4")) # confidence
+# setting confidence to a factor variable
+df_w$conf <- factor(df_w$conf, levels = c("1", "2", "3", "4")) # confidence
 
-dfW <- na.omit(dfW)
+# removing NA values from the dataframe
+df_w <- na.omit(df_w)
 
-dfW$study <- c("Experiment 2")
+# creating column with all values as "Experiment 2"
+df_w$study <- c("Experiment 2")
 ```
 
 # Combine two data sets
 ```{r}
-df <- bind_rows(dfM, dfW)
+df <- bind_rows(df_m, df_w)
 # just ignore the na values
 
 df$study <- as.factor(df$study)
