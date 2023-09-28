@@ -42,19 +42,24 @@ df_w <- read.csv(file = file.path(data_path, "w_part3_rt_out.csv"))
 Preparations for df_m
 ```{r}
 # setting pe as a factor
-df_m$pe <- factor(df_m$pe, levels = c("lowPE", "medPE", "highPE")) # pe
+df_m <- df_m %>% 
+  mutate(pe = factor(pe, levels = c("lowPE", "medPE", "highPE")))
 
 # setting participant to a factor variable
-df_m$participant <- as.factor(df_m$participant) # participants
+df_m <- df_m %>% 
+  mutate(participant = as.factor(participant))
 
 # setting confidence to a factor variable
-df_m$conf <- factor(df_m$conf, levels = c("1", "2", "3", "4")) # confidence
+df_m <- df_m %>% 
+  mutate(conf = factor(conf, levels = c("1", "2", "3", "4")))
 
 # removing NA values from the dataframe
-df_m <- na.omit(df_m)
+df_m <- df_m %>% 
+  na.omit()
 
 # creating column with all values as "Experiment 2"
-df_m$study <- c("Experiment 1")
+df_m <- df_m %>% 
+  mutate(study = "Experiment 1") 
 ```
 
 # preparations for df_w
