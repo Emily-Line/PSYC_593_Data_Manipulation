@@ -69,19 +69,25 @@ df_w <- df_w %>%
   mutate(pe = recode(PE_level, low = "lowPE", medium = "medPE", high = "highPE"))
 
 # converting pe to a factor variable
-df_w$pe <- factor(df_w$pe, levels = c("lowPE", "medPE", "highPE")) # pe
+df_w <- df_w %>%  
+  mutate(pe = factor(pe, levels = c("lowPE", "medPE", "highPE"))) # pe
+
 
 # setting participant to a factor variable
-df_w$participant <- as.factor(df_w$participant) # participants
+df_w <- df_w %>% 
+  mutate(participant = factor(participant)) # participants
 
 # setting confidence to a factor variable
-df_w$conf <- factor(df_w$conf, levels = c("1", "2", "3", "4")) # confidence
+df_w <- df_w %>%  
+  mutate(conf = factor(conf, levels = c("1", "2", "3", "4"))) # confidence
 
 # removing NA values from the dataframe
-df_w <- na.omit(df_w)
+df_w <- df_w %>% 
+  na.omit()
 
 # creating column with all values as "Experiment 2"
-df_w$study <- c("Experiment 2")
+df_w <- df_w %>% 
+  mutate(study = "Experiment 2")
 ```
 
 # Combine two data sets
