@@ -92,7 +92,8 @@ df <- bind_rows(df_m, df_w)
 # just ignore the na values
 
 # setting study as a factor variable
-df$study <- as.factor(df$study)
+df <- df %>% 
+  mutate(study = as.factor(study))
 ```
 
 # Aggregated data
