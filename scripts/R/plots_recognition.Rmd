@@ -117,7 +117,7 @@ df_corr_ans <- df %>%
 
 # creates a summary dataframe of the corrAns varible (count, mean, sd, se, ci)
 # grouped by pe, participant, and study
-df_corr_ans_part <- 
+df_corr_ans_part <- df %>% 
   group_by(pe, participant, study) %>% 
   summarise(
     N = n(),
@@ -215,7 +215,7 @@ ggplot(df_corr_ans_part, aes(x = pe, y = mean_corr_ans, fill = pe)) +
 ```{r}
 
 # Summary statistics for mean_corr_ans variable, grouped by pe, study, and conf
-df_corr_ans_conf <- 
+df_corr_ans_conf <- df %>% 
   group_by(pe, study, conf) %>% 
   summarise(
     N = n(),
@@ -225,7 +225,7 @@ df_corr_ans_conf <-
   )
 
 ## Summary statistics for corrAns variable, grouped by pe, participant, study, and conf
-df_corr_ans_all <- 
+df_corr_ans_all <- df %>% 
   group_by(pe, participant, conf, study) %>% 
   summarise(
     N = n(),
