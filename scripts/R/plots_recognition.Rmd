@@ -9,7 +9,7 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r warning=FALSE, message=FALSE}
+```{r libraries, warning=FALSE, message=FALSE}
 library(lme4)
 library(car)
 library(tidyr)
@@ -27,7 +27,7 @@ library(here)
 ```
 
 # Open data seperately
-```{r}
+```{r open-data}
 # setting relative path
 here_path <- here()
 
@@ -40,7 +40,7 @@ df_w <- read.csv(file = file.path(data_path, "w_part3_rt_out.csv"))
 ```
 
 Preparations for df_m
-```{r}
+```{rdf_m-cleaning}
 # setting pe as a factor
 df_m <- df_m %>% 
   mutate(pe = factor(pe, levels = c("lowPE", "medPE", "highPE")))
@@ -63,7 +63,7 @@ df_m <- df_m %>%
 ```
 
 # preparations for df_w
-```{r}
+```{r df_w-cleaning}
 # change the naming for PE levels to be consistend
 df_w <- df_w %>%
   mutate(pe = recode(PE_level, low = "lowPE", medium = "medPE", high = "highPE"))
@@ -91,7 +91,7 @@ df_w <- df_w %>%
 ```
 
 # Combine two data sets
-```{r}
+```{r combine-data}
 # combining the two dataframes 
 # will set NA values to any columns that one dataset does not have
 df <- bind_rows(df_m, df_w)
@@ -103,7 +103,7 @@ df <- df %>%
 ```
 
 # Aggregated data
-```{r}
+```{r aggregate-data}
 # creates a summary dataframe of the corrAns varible (count, mean, sd, se, ci)
 # grouped by pe and study
 df_corr_ans <- df %>% 
@@ -129,7 +129,7 @@ df_corr_ans_part <- df %>%
 ```
 
 # First plot - Rainyclouds
-```{r}
+```{r rainy-clouds, warning = FALSE}
 
 # Violin plot of hit responses as a function of pe level, for Experiments 1 and 2
 ggplot(df_corr_ans_part, aes(x = pe, y = mean_corr_ans, fill = pe)) +
@@ -159,7 +159,7 @@ ggplot(df_corr_ans_part, aes(x = pe, y = mean_corr_ans, fill = pe)) +
 ```
 
 # Second plot - spaghetti & box & distribution
-```{r}
+```{r spaghetti-box-plot, warning = FALSE}
 
 # Hit rate per person across different levels of pe, per each experiment
 ggplot(df_corr_ans_part, aes(x = 1, y = mean_corr_ans, fill = pe)) +
@@ -189,7 +189,7 @@ ggplot(df_corr_ans_part, aes(x = 1, y = mean_corr_ans, fill = pe)) +
 
 
 # Third plot - violin
-```{r}
+```{r violin-plot-1, warning = FALSE}
 
 # Plot of hit rate as a function of pe level, per each experiment
 # Significance shown for low vs. high pe level
@@ -212,7 +212,7 @@ ggplot(df_corr_ans_part, aes(x = pe, y = mean_corr_ans, fill = pe)) +
 
 
 # CONFINDENCE 
-```{r}
+```{r confidence-summaries}
 
 # Summary statistics for mean_corr_ans variable, grouped by pe, study, and conf
 df_corr_ans_conf <- df %>% 
@@ -236,7 +236,7 @@ df_corr_ans_all <- df %>%
 ```
 
 PLOT
-```{r}
+```{r violin-plot-2, warning = FALSE}
 # Violin plot of hit rate as a function of pe, grouped by confidence levels
 ggplot(df_corr_ans_all, aes(x = pe, y = mean_corr_ans, fill = pe)) +
   geom_violin(color = "white", trim = TRUE) +
