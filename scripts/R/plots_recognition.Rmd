@@ -209,15 +209,24 @@ ggplot(df_corr_ans_part, aes(x = pe, y = mean_corr_ans, fill = pe)) +
 ```{r}
 
 # Summary statistics for mean_corr_ans variable, grouped by pe, study, and conf
-df_corr_ans_conf <- summarySE(df,
-  measurevar = "corrAns", 
-  groupvars = c("pe", "study", "conf"), na.rm = TRUE)
+df_corr_ans_conf <- 
+  group_by(pe, study, conf) %>% 
+  summarise(
+    N = n(),
+    mean_corr_ans = mean(corrAns, na.rm = TRUE),
+    sd = sd(corrAns, na.rm = TRUE),
+    se = sd / sqrt(N)
+  )
 
 ## Summary statistics for corrAns variable, grouped by pe, participant, study, and conf
-df_corr_ans_all <- summarySE(df,
-  measurevar = "corrAns",
-  groupvars = c("pe", "participant", "conf", "study"), na.rm = TRUE
-)
+df_corr_ans_all <- 
+  group_by(pe, participant, conf, study) %>% 
+  summarise(
+    N = n(),
+    mean_corr_ans = mean(corrAns, na.rm = TRUE),
+    sd = sd(corrAns, na.rm = TRUE),
+    se = sd / sqrt(N)
+  )
 ```
 
 PLOT
