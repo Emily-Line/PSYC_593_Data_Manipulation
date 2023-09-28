@@ -40,7 +40,7 @@ df_w <- read.csv(file = file.path(data_path, "w_part3_rt_out.csv"))
 ```
 
 Preparations for df_m
-```{rdf_m-cleaning}
+```{r df_m-cleaning}
 # setting pe as a factor
 df_m <- df_m %>% 
   mutate(pe = factor(pe, levels = c("lowPE", "medPE", "highPE")))
