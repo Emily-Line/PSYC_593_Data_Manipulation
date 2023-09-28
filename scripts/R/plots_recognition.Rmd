@@ -115,7 +115,7 @@ df_corr_ans_part <-
   group_by(pe, participant, study) %>% 
   summarise(
     N = n(),
-    mean_corr_Ans = mean(corrAns, na.rm = TRUE),
+    mean_corr_ans = mean(corrAns, na.rm = TRUE),
     sd = sd(corrAns, na.rm = TRUE),
     se = sd / sqrt(N)
   )
